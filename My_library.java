@@ -63,6 +63,8 @@ class My_library {
 
 
 
+
+    //Hint - Find transpose then reverse
     public static void rotateImage(int ar[][]) {
         int m = ar.length;
         int n = ar[0].length;
