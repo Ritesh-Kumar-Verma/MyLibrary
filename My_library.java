@@ -95,6 +95,8 @@ class My_library {
     }
 
 
+
+
     public int[][] findAllPair(int [] ar ,int target){
 
         HashMap<Integer,Integer> map = new HashMap<>();
@@ -294,6 +296,11 @@ class My_library {
             System.out.print(i+" ");
         }
         System.out.println();
+    }
+    public void printArray(int ar[][]){
+        for(int i[] : ar){
+            printArray(i);
+        }
     }
 
     public void mergeSort(int[] ar, int l, int r) {
@@ -608,22 +615,20 @@ class My_library {
 
 
     public int lengthOfLongestSubstring(String s) {
-        int i = 0;
-        int j = 1;
-        int size = s.length();
-        int max = 0;
-        if (size < 2) {
-            return size;
-        }
-        while (j < size) {
-            if (contain(s, s.charAt(j), i, j)) {
-                i++;
-            } else {
-                max = ((j - i + 1) > max) ? (j - i + 1) : max;
-                j++;
+        HashSet<Character> set = new HashSet<>();
+
+        int i = 0 ;
+        int m = 0 ;
+
+        for(int j = 0 ; j < s.length() ; j++){
+            while(set.contains(s.charAt(j))){
+                set.remove(s.charAt(i++));
             }
+            set.add(s.charAt(j));
+            m = Math.max(m,j-i+1);
+
         }
-        return max;
+        return m;
     }
 
 
