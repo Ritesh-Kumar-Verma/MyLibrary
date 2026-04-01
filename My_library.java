@@ -1140,6 +1140,33 @@ class My_library {
         return res;
     }
 
+    public int smallestPossibleSumWithSizeK(int ar[],int k){
+        int minArea = Integer.MAX_VALUE;
+        int curArea = 0;
+        for(int i = 0 ; i < ar.length ; i++){
+            curArea+=ar[i];
+            if(i>=k-1){
+                minArea = Math.min(curArea,minArea);
+                curArea-=ar[i-k+1];
+            }
+        }
+        return minArea;
+
+    }
+    public static int largestPossibleSumWithSizeK(int ar[],int k){
+        int maxArea = Integer.MIN_VALUE;
+        int curArea = 0;
+        for(int i = 0 ; i < ar.length ; i++){
+            curArea+=ar[i];
+            if(i>=k-1){
+                maxArea = Math.max(curArea,maxArea);
+                curArea-=ar[i-k+1];
+            }
+        }
+        return maxArea;
+
+    }
+
     /*****************************************************************************/
 
 
