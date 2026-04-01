@@ -1084,6 +1084,62 @@ class My_library {
 
         return result;
     }
+
+
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for(int i : nums){
+            map.put(i,map.getOrDefault(i,0)+1);
+        }
+
+        List<Integer> [] bucket = new List[nums.length+1];
+
+        for(int i : map.keySet()){
+            if(bucket[map.get(i)] == null){
+                bucket[map.get(i)] = new ArrayList<>();
+            }
+            bucket[map.get(i)].add(i);
+        }
+        int ar[] = new int[k];
+        int j = 0;
+
+        for(int i = bucket.length-1;i>=0 && j<k ;i-- ){
+            if(bucket[i] == null){
+                continue;
+            }
+            for(int t : bucket[i]){
+                ar[j++] = t;
+                if(j == k){
+                    return ar;
+                }
+            }
+
+        }
+        return ar;
+
+
+
+    }
+    public int[] productExceptSelf(int[] nums) {
+        int arl[] = new int[nums.length];
+        int arr[] = new int[nums.length];
+        arl[0]=1;
+        arr[nums.length-1] = 1;
+        for(int j=1 ;j<nums.length;j++ ){
+            arl[j] = arl[j-1]*nums[j-1];
+        }
+        for(int j = nums.length-2 ; j>=0 ; j--){
+            arr[j] = arr[j+1] * nums[j+1];
+        }
+        int res[] = new int[nums.length];
+
+        for(int j = 0 ; j < nums.length ; j++){
+            res[j] = arl[j]*arr[j];
+        }
+        return res;
+    }
+
     /*****************************************************************************/
 
 
