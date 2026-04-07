@@ -18,7 +18,8 @@ class ListNode {
 }
 
 
-class My_library {
+
+public class My_library {
 
     public boolean is_perfect(int n) {
 
@@ -1121,6 +1122,7 @@ class My_library {
 
 
     }
+
     public int[] productExceptSelf(int[] nums) {
         int arl[] = new int[nums.length];
         int arr[] = new int[nums.length];
@@ -1140,37 +1142,130 @@ class My_library {
         return res;
     }
 
-    public int smallestPossibleSumWithSizeK(int ar[],int k){
-        int minArea = Integer.MAX_VALUE;
-        int curArea = 0;
-        for(int i = 0 ; i < ar.length ; i++){
-            curArea+=ar[i];
-            if(i>=k-1){
-                minArea = Math.min(curArea,minArea);
-                curArea-=ar[i-k+1];
+
+    //find pivot index then compare if target >= num[0] then i = 0 else i = p
+    public int search(int[] nums, int target) {
+        int p = 0;
+
+
+        for(int i = 0 ; i < nums.length-1 ; i++){
+            if(nums[i] < nums[i+1]){
+                p++;
+            }
+            else{
+                break;
             }
         }
-        return minArea;
-
-    }
-    public static int largestPossibleSumWithSizeK(int ar[],int k){
-        int maxArea = Integer.MIN_VALUE;
-        int curArea = 0;
-        for(int i = 0 ; i < ar.length ; i++){
-            curArea+=ar[i];
-            if(i>=k-1){
-                maxArea = Math.max(curArea,maxArea);
-                curArea-=ar[i-k+1];
-            }
+        int i = 0;
+        if(target>= nums[0]){
+            i = 0;
         }
-        return maxArea;
+        else{
+            i = p;
+        }
+        while(i<nums.length){
+            if(nums[i] == target){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+
 
     }
+
+
+
+
+
+
+
+
+
 
     /*****************************************************************************/
 
 
+    class SlidingWindow{
 
+        public int smallestPossibleSumWithSizeK(int ar[],int k){
+            int minArea = Integer.MAX_VALUE;
+            int curArea = 0;
+            for(int i = 0 ; i < ar.length ; i++){
+                curArea+=ar[i];
+                if(i>=k-1){
+                    minArea = Math.min(curArea,minArea);
+                    curArea-=ar[i-k+1];
+                }
+            }
+            return minArea;
+
+        }
+
+        public static int largestPossibleSumWithSizeK(int ar[],int k){
+            int maxArea = Integer.MIN_VALUE;
+            int curArea = 0;
+            for(int i = 0 ; i < ar.length ; i++){
+                curArea+=ar[i];
+                if(i>=k-1){
+                    maxArea = Math.max(curArea,maxArea);
+                    curArea-=ar[i-k+1];
+                }
+            }
+            return maxArea;
+
+        }
+
+        public int maxSumSubarrayOfSizeK(int ar[], int k){
+
+            int maxSum = Integer.MIN_VALUE;
+            int curSum = 0;
+            for(int i = 0; i<ar.length ; i++){
+                curSum+=ar[i];
+                if(i>=k-1){
+                    maxSum = Math.max(curSum,maxSum);
+                    curSum-=ar[i-k+1];
+                }
+            }
+            return maxSum;
+
+        }
+
+        //ABAB for k = 2 => we can replace either A or B and get AAAA or BBBB so output is 4
+        public int characterReplacement(String s, int k) {
+            int i = 0;
+            int maxLen = 0;
+            int ar[] = new int[26];
+
+            for(int j = 0 ; j<s.length();j++){
+                ar[s.charAt(j)-'A']++;
+                int tmax = Arrays.stream(ar).max().getAsInt();
+                while((j-i+1)-tmax > k){
+                    ar[s.charAt(i)-'A']--;
+                    i++;
+                }
+                maxLen = Math.max(maxLen , j-i+1);
+            }
+            return maxLen;
+        }
+
+
+        public int smallestSizeOfSubarrayWithMinSumK(int[] ar, int target) {
+            int sm = Integer.MAX_VALUE;
+            int curSum=0;
+            int j = 0;
+
+            for(int i = 0 ; i<ar.length ; i++){
+                curSum+=ar[i];
+                while(curSum >= target){
+                    sm = Math.min(sm,i-j+1);
+                    curSum-=ar[j];
+                    j++;
+                }
+            }
+            return sm == Integer.MAX_VALUE ? 0 : sm;
+        }
+    }
 
 
 
