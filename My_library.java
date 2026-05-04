@@ -270,20 +270,7 @@ public class My_library {
         }
     }
 
-    public int binarySearch(int[] ar, int target, int i, int j) {
-        if (i <= j) {
-            int mid = (i + j) / 2;
-            if (ar[mid] == target) {
-                return mid;
-            } else if (ar[mid] < target) {
-                return binarySearch(ar, target, mid + 1, j);
-            } else {
-                return binarySearch(ar, target, i, mid - 1);
-            }
-        } else {
-            return -1;
-        }
-    }
+
 
     public void printArray(int ar[]) {
         for (int i : ar) {
@@ -489,55 +476,34 @@ public class My_library {
 
     }
 
-    public List<List<Integer>> tripletSum(int ar[]) { // this program handle duplicate (if we use set then
+    public List<List<Integer>> tripletSum(int nums[]) { // this program handle duplicate (if we use set then
                                                       // handling duplicate will not be required)
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        if (ar.length < 3) {
-            return result;
-        }
-        int i;
-        int j;
-        int k = 0;
-        int size = ar.length;
-        while (k < size - 2) {
-            if (k > 0 && ar[k] == ar[k - 1]) {
-                k++;
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+
+        for(int k = 0; k < nums.length-2;k++){
+            if(k>0 && nums[k] == nums[k-1]){
                 continue;
             }
-
-            i = k + 1;
-            j = size - 1;
-            while (i < j) {
-                int sum = ar[i] + ar[j] + ar[k];
-                if (sum < 0) {
-                    i++;
-
-                } else if (sum > 0) {
-                    j--;
-
-                } else {
-                    List<Integer> list = new ArrayList<Integer>();
-                    list.add(ar[k]);
-                    list.add(ar[i]);
-                    list.add(ar[j]);
-                    result.add(list);
+            int i = k+1;
+            int j = nums.length-1;
+            while(i<j){
+                if(nums[i] + nums[j] + nums[k] == 0){
+                    result.add(Arrays.asList(nums[k],nums[i],nums[j]));
                 }
-
-                while (i < j && ar[i] == ar[i + 1]) {
-                    i++;
-                }
-                while (i < j && ar[j] == ar[j - 1]) {
-                    j--;
-                }
-
                 i++;
                 j--;
-
+                while(i<j && nums[i] == nums[i-1]){
+                    i++;
+                    System.out.println(i);
+                }
+                while(j>i && nums[j] == nums[j+1]){
+                    j--;
+                }
             }
-
-            k++;
         }
         return result;
+
     }
     public int firstUnique(String str){
         HashMap<Character,Integer> map = new HashMap<>();
@@ -1143,36 +1109,7 @@ public class My_library {
     }
 
 
-    //find pivot index then compare if target >= num[0] then i = 0 else i = p
-    public int search(int[] nums, int target) {
-        int p = 0;
 
-
-        for(int i = 0 ; i < nums.length-1 ; i++){
-            if(nums[i] < nums[i+1]){
-                p++;
-            }
-            else{
-                break;
-            }
-        }
-        int i = 0;
-        if(target>= nums[0]){
-            i = 0;
-        }
-        else{
-            i = p;
-        }
-        while(i<nums.length){
-            if(nums[i] == target){
-                return i;
-            }
-            i++;
-        }
-        return -1;
-
-
-    }
 
 
 
@@ -1184,6 +1121,72 @@ public class My_library {
 
 
     /*****************************************************************************/
+
+    class BinarySearch{
+        public int binarySearch(int[] ar, int target, int i, int j) {
+            if (i <= j) {
+                int mid = (i + j) / 2;
+                if (ar[mid] == target) {
+                    return mid;
+                } else if (ar[mid] < target) {
+                    return binarySearch(ar, target, mid + 1, j);
+                } else {
+                    return binarySearch(ar, target, i, mid - 1);
+                }
+            } else {
+                return -1;
+            }
+        }
+        public int findMin(int[] nums) {
+            int i = 0;
+            int j = nums.length-1;
+            while(i<j){
+                int mid = (i+j)/2;
+                if(nums[mid]>nums[j]){
+                    i=mid+1;
+                }
+                else{
+                    j=mid;
+                }
+
+            }
+            return nums[(i+j)/2];
+
+        }
+
+        //find pivot index then compare if target >= num[0] then i = 0 else i = p
+        public int search(int[] nums, int target) {
+            int p = 0;
+
+
+            for(int i = 0 ; i < nums.length-1 ; i++){
+                if(nums[i] < nums[i+1]){
+                    p++;
+                }
+                else{
+                    break;
+                }
+            }
+            int i = 0;
+            if(target>= nums[0]){
+                i = 0;
+            }
+            else{
+                i = p;
+            }
+            while(i<nums.length){
+                if(nums[i] == target){
+                    return i;
+                }
+                i++;
+            }
+            return -1;
+
+
+        }
+    }
+
+
 
 
     class SlidingWindow{
