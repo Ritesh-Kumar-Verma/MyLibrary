@@ -18,8 +18,102 @@ class ListNode {
 }
 
 
+class Recursion{
 
-public class My_library {
+    public Integer factorial(int n , HashMap<Integer , Integer> map ){
+        if(n==0){
+            return 1;
+        }
+        if(map.containsKey(n)){
+            return map.get(n);
+        }
+        map.put(n,factorial(n-1,map)*n);
+        return map.get(n);
+    }
+    public int sumOfDigit(int n){
+        if(n==0){
+            return 0;
+        }
+        return n%10+sumOfDigit(n/10);
+    }
+    public static String reverse(String s){
+        if(s.length() <= 1){
+            return s;
+        }
+        return s.substring(s.length()-1)+reverse(s.substring(0,s.length()-1));
+    }
+
+    //provide an array of length n+1 filled with -1 using Arrays.fill(ar,-1)
+    public int fibonacci(int n,int ar[]){
+        if(ar[n] != -1){
+            return ar[n];
+        }
+        if(n<=1){
+            ar[n]=n;
+            return n;
+        }
+        ar[n]=fibonacci(n-2,ar)+fibonacci(n-1,ar);
+        return ar[n];
+    }
+
+    //correct but less efficient because it create many string
+    public static boolean checkPalindrome(String s){
+        if(s.length()<=1){
+            return true;
+        }
+        if(s.substring(0,1).equals(s.substring(s.length()-1))){
+            return checkPalindrome(s.substring(1,s.length()-1));
+        }
+        return false;
+    }
+
+    //provide start index and end index of the string where j = s.length()-1
+    public boolean checkPalindrome(String s,int i,int j){
+        if(i>=j){
+            return true;
+        }
+        if(s.charAt(i) == s.charAt(j)){
+            return checkPalindrome(s,++i,--j);
+        }
+        return false;
+    }
+
+
+
+    public int binarySearch(int ar[],int target,int i,int j){
+        if(i>j){
+            return -1;
+        }
+        int mid = i+(j-i)/2;
+
+        if(ar[mid] == target){
+            return mid;
+        }
+        else if(ar[mid]>target){
+            return binarySearch(ar,target,i,mid-1);
+        }else{
+            return binarySearch(ar,target,mid+1,j);
+        }
+    }
+
+    public boolean isSorted(int ar[],int i){
+        if(i>=ar.length-1){
+            return true;
+        }
+        if(ar[i]<=ar[i+1]){
+            return isSorted(ar,i+1);
+        }
+        return false;
+    }
+
+
+
+
+}
+
+
+
+public class My_library extends Recursion{
 
     public boolean is_perfect(int n) {
 
